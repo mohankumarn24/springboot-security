@@ -2,7 +2,7 @@ package net.projectsync.springsecurity.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import net.projectsync.springsecurity.model.Employee;
+import net.projectsync.springsecurity.entity.Employee;
 import net.projectsync.springsecurity.service.EmployeeService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

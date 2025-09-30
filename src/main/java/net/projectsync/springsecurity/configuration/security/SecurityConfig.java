@@ -19,6 +19,43 @@ public class SecurityConfig {
     @Autowired
     private CustomSuccessHandler successHandler;
 
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/login", "/dashboard", "/welcome", "/css/**", "/api/v1/register").permitAll()
+                .antMatchers("/employees/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            .and()
+            .formLogin()
+                .loginPage("/login")
+                .successHandler(successHandler)
+                .permitAll()
+            .and()
+            .logout()
+            	.logoutUrl("/perform_logout") // custom logout endpoint
+            	// .logoutSuccessUrl("/login?logout") // redirect after logout   
+            	.logoutSuccessUrl("/logout-success") // .use "logoutSuccessUrl("/logout-success")" to show custom message or page
+            	.invalidateHttpSession(true)
+            	.deleteCookies("JSESSIONID")
+            	.permitAll();
+
+            /* default logout
+            .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
+			*/
+        
+        return http.build();
+    }
+
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -86,31 +123,4 @@ public class SecurityConfig {
         return http.build();
     }
     */
-
-    // Role-based redirection
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeRequests()
-                .antMatchers("/login", "/dashboard", "/css/**", "/api/auth/register").permitAll()
-                .antMatchers("/employees/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            .and()
-            .formLogin()
-                .loginPage("/login")
-                .successHandler(successHandler) // custom redirect logic
-                .permitAll()
-            .and()
-            .logout()
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
-
-        return http.build();
-    }
-    
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
 }

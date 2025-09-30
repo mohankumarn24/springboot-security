@@ -1,4 +1,4 @@
-package net.projectsync.springsecurity.model;
+package net.projectsync.springsecurity.entity;
 
 import java.util.Objects;
 import javax.persistence.Entity;

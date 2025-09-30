@@ -1,15 +1,9 @@
-package net.projectsync.springsecurity.model;
+package net.projectsync.springsecurity.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import net.projectsync.springsecurity.enums.Role;
-
-// DTO
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class RegistrationRequest {
 

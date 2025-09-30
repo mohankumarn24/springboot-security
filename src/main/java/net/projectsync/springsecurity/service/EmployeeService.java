@@ -2,7 +2,7 @@ package net.projectsync.springsecurity.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import net.projectsync.springsecurity.model.Employee;
+import net.projectsync.springsecurity.entity.Employee;
 import net.projectsync.springsecurity.repository.EmployeeRepository;
 
 @Service

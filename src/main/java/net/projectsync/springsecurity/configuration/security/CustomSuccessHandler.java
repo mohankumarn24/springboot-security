@@ -12,13 +12,16 @@ import java.util.Set;
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, 
+    									HttpServletResponse response, 
+    									Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect("/employees");
+            response.sendRedirect("/employees");	 // return employees.html
         } else if (roles.contains("ROLE_USER")) {
-            response.sendRedirect("/dashboard");
+            // response.sendRedirect("/dashboard");  // return dashboard.html
+        	response.sendRedirect("/welcome");		 // hit /welcome endpoint
         } else {
             response.sendRedirect("/login?error");
         }

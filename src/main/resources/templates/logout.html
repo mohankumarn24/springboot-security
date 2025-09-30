@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Employees</title>
+    <title>Logged Out</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #f0f4f8, #d9e4f5);
+            background: linear-gradient(to right, #f8f9fa, #e0e0e0);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,14 +16,14 @@
         .container {
             background-color: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 400px;
         }
 
         h2 {
-            color: #333;
+            color: #dc3545;
             margin-bottom: 20px;
         }
 
@@ -32,33 +32,27 @@
             color: #555;
         }
 
-        form {
-            margin-top: 30px;
-        }
-
-        button {
+        a {
+            display: inline-block;
+            margin-top: 25px;
             padding: 10px 20px;
-            background-color: #dc3545;
+            background-color: #007BFF;
             color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            cursor: pointer;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            background-color: #c82333;
+        a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Welcome Admin!</h2>
-    <p>You are viewing the Employees page.</p>
-
-	<form th:action="@{/perform_logout}" method="post">
-	    <button type="submit">Logout</button>
-	</form>
+    <h2>You’ve been logged out</h2>
+    <p>Thank you for visiting. You can log in again anytime to continue.</p>
+    <a th:href="@{/login}">Back to Login</a>
 </div>
 </body>
 </html>
