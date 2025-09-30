@@ -35,6 +35,24 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user, admin);
     }
 
+    /*
+    // Without using encoder. Remove passwordEncoder() method to work
+	@Bean
+	public InMemoryUserDetailsManager userDetailsService() {
+	    UserDetails user = User.withUsername("mohan")
+	            .password("{noop}password")
+	            .roles("USER")
+	            .build();
+
+	    UserDetails admin = User.withUsername("admin")
+	            .password("{noop}admin123")
+	            .roles("ADMIN")
+	            .build();
+
+	    return new InMemoryUserDetailsManager(user, admin);
+	}
+	*/
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
