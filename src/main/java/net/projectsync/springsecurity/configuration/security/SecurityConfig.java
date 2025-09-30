@@ -1,5 +1,6 @@
 package net.projectsync.springsecurity.configuration.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private CustomSuccessHandler successHandler;
+
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -57,15 +62,49 @@ public class SecurityConfig {
 	}
 	*/
     
+    /*
+	// after login displays default welcome page or redirects to original endpoint
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable() // Disable CSRF for testing APIs
+            .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/employees").hasRole("ADMIN") // Only admin can access
+                .antMatchers("/login", "/css/**", "/js/**").permitAll()
+                .antMatchers("/employees/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()
-            .httpBasic(); // Use HTTP Basic authentication
+            .formLogin()
+                .loginPage("/login") // custom login page
+                .defaultSuccessUrl("/welcome", true) 
+                // redirect after login. If you set true to false, Spring will redirect to the originally requested page (if any), otherwise fallback to /welcome.
+                .permitAll()
+            .and()
+            .logout()
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
+
+        return http.build();
+    }
+    */
+
+    // Role-based redirection
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/login", "/dashboard", "/css/**").permitAll()
+                .antMatchers("/employees/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            .and()
+            .formLogin()
+                .loginPage("/login")
+                .successHandler(successHandler) // custom redirect logic
+                .permitAll()
+            .and()
+            .logout()
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
 
         return http.build();
     }
