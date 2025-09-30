@@ -32,6 +32,11 @@
             color: #555;
         }
 
+        .countdown {
+            font-weight: bold;
+            color: #007BFF;
+        }
+
         a {
             display: inline-block;
             margin-top: 25px;
@@ -47,12 +52,30 @@
             background-color: #0056b3;
         }
     </style>
+
+    <script>
+        const seconds = 5; // ⏱️ Change this to configure delay
+        let countdown = seconds;
+
+        function updateCountdown() {
+            document.getElementById("countdown").textContent = countdown;
+            if (countdown === 0) {
+                window.location.href = "/login";
+            }
+            countdown--;
+        }
+
+        window.onload = function () {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        };
+    </script>
 </head>
 <body>
 <div class="container">
     <h2>You’ve been logged out</h2>
-    <p>Thank you for visiting. You can log in again anytime to continue.</p>
-    <a th:href="@{/login}">Back to Login</a>
+    <p>Redirecting to login in <span id="countdown" class="countdown">5</span> seconds...</p>
+    <a th:href="@{/login}">Login Now</a>
 </div>
 </body>
 </html>

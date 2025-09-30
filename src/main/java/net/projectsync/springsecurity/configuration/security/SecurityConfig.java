@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/login", "/dashboard", "/welcome", "/css/**", "/api/v1/register").permitAll()
+                .antMatchers("/", "/login", "/dashboard", "/welcome", "/css/**", "/api/v1/register").permitAll()
                 .antMatchers("/employees/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()
@@ -34,9 +34,10 @@ public class SecurityConfig {
                 .permitAll()
             .and()
             .logout()
-            	.logoutUrl("/perform_logout") // custom logout endpoint
-            	// .logoutSuccessUrl("/login?logout") // redirect after logout   
+            	.logoutUrl("/perform_logout") // custom logout endpoint 
             	.logoutSuccessUrl("/logout-success") // .use "logoutSuccessUrl("/logout-success")" to show custom message or page
+            	// .logoutSuccessUrl("/login?logout") // redirect after logout
+            	// .logoutSuccessUrl("/") // redirects to home page after logout
             	.invalidateHttpSession(true)
             	.deleteCookies("JSESSIONID")
             	.permitAll();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 420px;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .role {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        a, button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover, button:hover {
+            background-color: #0056b3;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to ProjectSync</h1>
+
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <p>Hello, <span th:text="${#authentication.name}">User</span>!</p>
+        <p>You are logged in as <span class="role" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Admin</span>
+           <span class="role" th:if="${#authorization.expression('hasRole(''USER'')')}">User</span>.</p>
+        <form th:action="@{/perform_logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <p>Please log in to access your dashboard.</p>
+        <a th:href="@{/login}">Login</a>
+    </div>
+</div>
+</body>
+</html>
