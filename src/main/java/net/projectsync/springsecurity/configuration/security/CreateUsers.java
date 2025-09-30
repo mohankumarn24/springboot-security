@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import net.projectsync.springsecurity.enums.Role;
 import net.projectsync.springsecurity.model.security.AppUser;
 import net.projectsync.springsecurity.repository.security.UserRepository;
 
@@ -20,7 +22,7 @@ public class CreateUsers {
 	            AppUser admin = new AppUser();
 	            admin.setUsername("admin");
 	            admin.setPassword(encoder.encode("password"));
-	            admin.setRole("ROLE_ADMIN");
+	            admin.setRole(Role.ROLE_ADMIN); // ✅ enum value
 	            repo.save(admin);
 	        }
 
@@ -28,7 +30,7 @@ public class CreateUsers {
 	            AppUser user = new AppUser();
 	            user.setUsername("mohan");
 	            user.setPassword(encoder.encode("password"));
-	            user.setRole("ROLE_USER");
+	            user.setRole(Role.ROLE_USER); // ✅ enum value
 	            repo.save(user);
 	        }
 	    };

@@ -93,7 +93,7 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/login", "/dashboard", "/css/**").permitAll()
+                .antMatchers("/login", "/dashboard", "/css/**", "/api/auth/register").permitAll()
                 .antMatchers("/employees/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()

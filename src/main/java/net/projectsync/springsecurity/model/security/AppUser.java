@@ -2,10 +2,13 @@ package net.projectsync.springsecurity.model.security;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import net.projectsync.springsecurity.enums.Role;
 
 /**
  * Spring Security has its own User class (used in UserDetailsService), but it’s not a JPA entity. 
@@ -24,8 +27,9 @@ public class AppUser {
 
 	private String password;
 
-	private String role; // e.g., "ROLE_ADMIN", "ROLE_USER"
-
+	@Enumerated(EnumType.STRING)
+	private Role role; // e.g., "ROLE_ADMIN", "ROLE_USER" // ✅ Enum type
+	
 	// Getters and setters
 	public Long getId() {
 		return id;
@@ -51,11 +55,11 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 }
